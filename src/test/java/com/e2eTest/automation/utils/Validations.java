@@ -16,6 +16,7 @@ import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -183,6 +184,29 @@ public class Validations extends BasePage {
 		if (text.isEmpty()) {
 			log.info("input box is empty");
 		}
+	}
+	
+	public void assertEquals(WebElement element, String text) {
+		String text1 = element.getText();
+		Assert.assertEquals(text1, text);
+
+	}
+
+	public void assertTrue(WebElement element, String text) {
+		String text1 = element.getText();
+		Assert.assertTrue(text1.contains(text));
+
+	}
+	
+	public void checkUrlChange(String url) {
+		String actualUrl = Setup.getDriver().getCurrentUrl();
+		if (actualUrl.equals(url)) {
+			log.info("The page did not change");
+		} else {
+			log.info("The page has changed");
+		}
+		log.info("Actual URL is : " + actualUrl);
+
 	}
 
 }

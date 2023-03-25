@@ -1,6 +1,7 @@
 package com.e2eTest.automation.utils;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
@@ -11,6 +12,10 @@ import java.util.Properties;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -318,6 +323,7 @@ public class SeleniumUtils extends BasePage {
 		// start input in input field
 		elementWeb.sendKeys(writeText);
 		Thread.sleep(3000);
+		waitForElementToBeClickable(elementWeb);
 		// get the list of suggestet inputs
 		List<WebElement> options = driver.findElements(By.tagName("li"));
 		// loop through list of inputs an click specific Text + break out the loop
@@ -451,6 +457,46 @@ public class SeleniumUtils extends BasePage {
 	public static String decoderString(String encodedStr) {
 		byte[] decoderString = Base64.getDecoder().decode(encodedStr.getBytes());
 		return (new String(decoderString));
+	}
+
+	/**
+	 * method to return to the default frame.
+	 *
+	 */
+	public void switchToDefaultFrame() {
+		driver.switchTo().defaultContent();
+	}
+
+	/**
+	 * method to return to the parent frame.
+	 *
+	 */
+	public void switchToParentFrame() {
+		driver.switchTo().parentFrame();
+	}
+
+	public JSONObject JsonData(int i) {
+
+		JSONParser parser = new JSONParser();
+
+		try {
+			Object obj = parser.parse(new FileReader("./src/test/resources/configs/waitConfig.json"));
+
+			JSONArray array = (JSONArray) obj;
+			JSONObject jsonObject = (JSONObject) array.get(i);
+
+			return jsonObject;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 }

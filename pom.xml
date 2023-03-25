@@ -3,11 +3,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>AutomationQA_Fork</groupId>
-	<artifactId>AutomationQA_Fork</artifactId>
+	<groupId>AutomationQA</groupId>
+	<artifactId>AutomationQA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>AutomationQA_Fork</name>
+	<name>AutomationQA</name>
 	<!-- FIXME change it to the project's website -->
 	<url>http://www.example.com</url>
 
@@ -29,9 +29,23 @@
 		<jasypt.version>1.9.3</jasypt.version>
 		<webdrivermanager.version>5.1.1</webdrivermanager.version>
 		<seleniumclient.version>4.8.1</seleniumclient.version>
-	</properties>
+		<apachepoi.version>3.13</apachepoi.version>
+		<json.version>1.1.1</json.version>
 
+	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>${json.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${apachepoi.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-http-jdk-client</artifactId>
