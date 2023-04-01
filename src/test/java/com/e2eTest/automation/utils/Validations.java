@@ -1,5 +1,6 @@
 package com.e2eTest.automation.utils;
 
+import org.junit.Assert;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -16,7 +17,6 @@ import org.apache.pdfbox.cos.COSDocument;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.util.PDFTextStripper;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -45,6 +45,21 @@ public class Validations extends BasePage {
 	public Validations() {
 		super();
 		this.driver = Setup.getDriver();
+	}
+
+	/**
+	 * method verify element is present.
+	 */
+	public void assertEquals(WebElement element, String text) {
+		String text1 = element.getText();
+		Assert.assertEquals(text1, text);
+
+	}
+
+	public void assertTrue(WebElement element, String text) {
+		String text1 = element.getText();
+		Assert.assertTrue(text1.contains(text));
+
 	}
 
 	/**
@@ -186,18 +201,6 @@ public class Validations extends BasePage {
 		}
 	}
 	
-	public void assertEquals(WebElement element, String text) {
-		String text1 = element.getText();
-		Assert.assertEquals(text1, text);
-
-	}
-
-	public void assertTrue(WebElement element, String text) {
-		String text1 = element.getText();
-		Assert.assertTrue(text1.contains(text));
-
-	}
-	
 	public void checkUrlChange(String url) {
 		String actualUrl = Setup.getDriver().getCurrentUrl();
 		if (actualUrl.equals(url)) {
@@ -208,5 +211,14 @@ public class Validations extends BasePage {
 		log.info("Actual URL is : " + actualUrl);
 
 	}
+    /**
+    * Assert command for checking the url in selenium webdriver
+    * @param string URL
+    */
+   public void checkChangedURL(String expectedURL)
+   {
+   	String URL = driver.getCurrentUrl();
+   	Assert.assertEquals(URL, expectedURL);
+   }
 
 }

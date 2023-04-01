@@ -6,9 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -22,6 +24,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -499,4 +502,100 @@ public class SeleniumUtils extends BasePage {
 
 	}
 
-}
+	/**
+	 * A list of methods for managing new tabs.
+	 *
+	 */
+	public void switchToNextTab() {
+		ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(tab.get(1));
+	}
+
+	public void closeAndSwitchToNextTab() {
+		driver.close();
+		ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(tab.get(1));
+	}
+
+	public void switchToPreviousTab() {
+		ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(tab.get(0));
+	}
+
+	public void closeTabAndReturn() {
+		driver.close();
+		ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(tab.get(0));
+	}
+
+	public void switchToPreviousTabAndClose() {
+		ArrayList<String> tab = new ArrayList<>(driver.getWindowHandles());
+		driver.switchTo().window(tab.get(1));
+		driver.close();
+	}
+
+	
+
+	/**
+	 * Switching Window.
+	 *
+	 */
+	public static void switchToWindow(String targetTitle) {
+		String origin = Setup.getDriver().getWindowHandle();
+		for (String handle : Setup.getDriver().getWindowHandles()) {
+			Setup.getDriver().switchTo().window(handle);
+			if (Setup.getDriver().getTitle().equals(targetTitle)) {
+				return;
+			}
+		}
+		Setup.getDriver().switchTo().window(origin);
+	}
+
+	/**
+	 * Return a list of string given a list of Web Element.
+	 *
+	 */
+	public static List<String> getElementsText(List<WebElement> list) {
+		List<String> elemTexts = new ArrayList<>();
+		for (WebElement el : list) {
+			if (!el.getText().isEmpty()) {
+				elemTexts.add(el.getText());
+			}
+		}
+		return elemTexts;
+	}
+
+	/**
+	 * Returns the Text of the element given an element locator.
+	 *
+	 */
+	public static List<String> getElementsText(By locator) {
+		List<WebElement> elems = Setup.getDriver().findElements(locator);
+		List<String> elemTexts = new ArrayList<>();
+		for (WebElement el : elems) {
+			if (!el.getText().isEmpty()) {
+				elemTexts.add(el.getText());
+			}
+		}
+		return elemTexts;
+	}
+
+	public static void clickWithTimeOut(WebElement element, int timeout) {
+		for (int i = 0; i < timeout; i++) {
+			try {
+				element.click();
+				return;
+			} catch (WebDriverException e) {
+				waitFor(1);
+			}
+		}
+	}
+		public static void waitFor(int seconds) {
+		    try {
+		        Thread.sleep(seconds * 1000);
+		    } catch (InterruptedException e) {
+		        e.printStackTrace();
+		    }
+		}
+		
+	}

@@ -25,6 +25,7 @@ public class Setup {
 	 */
 	@Before
 	public void setWebDriver() {
+		
 
 		String browser = System.getProperty("browser");
 		if (browser == null) {
@@ -39,6 +40,7 @@ public class Setup {
 			 */
 			System.setProperty("webdriver.http.factory", "jdk-http-client");
 			ChromeOptions chromeOptions = new ChromeOptions();
+			chromeOptions.addArguments("--remote-allow-origins=*");
 			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver(chromeOptions);
 			driver.manage().window().maximize();
@@ -65,3 +67,24 @@ public class Setup {
 	}
 
 }
+
+
+/* 
+ * Navigation sur FireFox
+ */
+
+//FirefoxProfile profile = new FirefoxProfile();
+//profile.setPreference("browser.download.folderList", 1);
+//profile.setPreference("browser.download.manager.showWhenStarting", false);
+//profile.setPreference("browser.download.manager.focusWhenStarting", false);
+//profile.setPreference("browser.download.useDownloadDir", true);
+//profile.setPreference("browser.helperApps.alwaysAsk.force", false);
+//profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
+//profile.setPreference("browser.download.manager.closeWhenDone", true);
+//profile.setPreference("browser.download.manager.showAlertOnComplete", false);
+//profile.setPreference("browser.download.manager.useWindow", false);
+
+
+
+
+
